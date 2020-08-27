@@ -56,13 +56,13 @@ class GLSLX.Renamer {
       for info in group {
         for symbol in info.symbols.values {
           var old = symbol.name
-          if !symbol.isImportedOrExported && (_renameSymbols == .ALL || _renameSymbols == .INTERNAL_ONLY && !symbol.isAttributeOrUniform) {
+          if !symbol.isImportedOrExported && (_renameSymbols == .ALL || _renameSymbols == .INTERNAL_ONLY && !(symbol.isAttributeOrUniform || symbol.isVarying)) {
             if name == null {
               name = _generateSymbolName
             }
             symbol.name = name
           }
-          if symbol.isAttributeOrUniform {
+          if symbol.isAttributeOrUniform || symbol.isVarying {
             renaming[old] = symbol.name
           }
         }
